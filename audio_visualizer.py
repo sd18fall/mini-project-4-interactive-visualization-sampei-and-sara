@@ -24,10 +24,13 @@ from __future__ import print_function
 
 
 
-__author__ = 'Sampei and Sara '
+__author__ = 'Sampei and Sara'
 __version__ = '0.0.1'
 
 def get_wav():
+    """Controller function - asks for wav file from user and ensures that it is
+    a wav file
+    """
     got_wav = False
     while got_wav == False:
         wav_file = input('What audio file would you like to visualize?: ')
@@ -37,9 +40,11 @@ def get_wav():
             print('You must enter an WAV file.')
 
 def process_key(key):
+    """ Controller function - identifies key input
+    """
     print(chr(key))
 
-if __name__ == "__main__":
+if __name__ == "__main__": #Controller
     # gameDisplay = pygame.display.set_mode((1,1))
     # clock = pygame.time.Clock()
     # end = False
@@ -54,4 +59,6 @@ if __name__ == "__main__":
     #     clock.tick(30)
     WAV_FILE = '/home/sampeiomichi/mini-project-4-interactive-visualization-\
     sampei-and-sara/pyAudioAnalysis/data/beat/small.wav'
-    audioAnalysis.beatExtractionWrapper(WAV_FILE, plot=True)
+    # audioAnalysis.beatExtractionWrapper(wav_file, plot=True)
+    [fs, x] = audioBasicIO.readAudioFile(WAV_FILE)
+    print(fs)
