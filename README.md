@@ -14,6 +14,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
+pygame
+moviepy
+pyAudioAnalysis
+
 ```
 Give examples
 ```
@@ -77,6 +81,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors
 
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Sara Ballantyne** - *Initial work* - []
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
