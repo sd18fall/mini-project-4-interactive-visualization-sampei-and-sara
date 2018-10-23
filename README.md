@@ -1,7 +1,7 @@
 # Music_Visualizer
 mini-project-4-interactive-visualization-sampei-and-sara created by GitHub Classroom
 
-This project is an Interactive Music Visulizer. TO use this program, users input a .wav file. From this file, data is extracted which is then used to generate equations which can be visualized as stills in a movie. Then, while playing the .wav file, this equations are visualized at live speed as a movie. During this movie, the user is able to manipulate the movie behavior throughout the song by interacting with several keys on the keyboard. These keystrokes will essentially swap colors in the equations but will not involve regenerating equations.
+This project is an Interactive Music Visulizer. To use this program, users input a .wav file. From this file, data is extracted which is then used to generate equations which can be visualized as stills in a movie. Then, while playing the .wav file, this equations are visualized at live speed as a movie. During this movie, the user is able to manipulate the movie behavior throughout the song by interacting with several keys on the keyboard. These keystrokes will essentially swap colors in the equations but will not involve regenerating equations.
 
 This project is still in progress towards our MVP: a movie with generative imagery, updated based on data extracted from the .wav file. The movie behavior is then modified by live keystrokes.
 
@@ -81,7 +81,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors
 
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Sara Ballantyne** - *Initial work* - []
+* **Sara Ballantyne** - *Initial work* - [github account][https://github.com/sballantyne]
+* **Sampei Omichi** - *Initial work* - [github account]
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
