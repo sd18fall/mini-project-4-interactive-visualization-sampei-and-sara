@@ -9,18 +9,19 @@ essentially swap colors in the equations but will not involve regenerating
 equations."""
 
 from __future__ import print_function
-# import shutil
-# import ntpath
-# import wave
-# import os
-# import glob
-# import eyed3
-# import numpy
-# from pydub import AudioSegment
-# import pygame
-# from pyAudioAnalysis import audioFeatureExtraction
-# from pyAudioAnalysis import audioBasicIO
-# from pyAudioAnalysis import audioAnalysis
+import shutil
+import ntpath
+import wave
+import os
+import glob
+import eyed3
+import numpy
+from pydub import AudioSegment
+import pygame
+import matplotlib.pyplot as plt
+from pyAudioAnalysis import audioFeatureExtraction
+from pyAudioAnalysis import audioBasicIO
+from pyAudioAnalysis import audioAnalysis
 
 
 
@@ -57,8 +58,7 @@ if __name__ == "__main__": #Controller
     #                 process_key(event.key)
     #     pygame.display.update()
     #     clock.tick(30)
-    WAV_FILE = '/home/sampeiomichi/mini-project-4-interactive-visualization-\
-    sampei-and-sara/pyAudioAnalysis/data/beat/small.wav'
-    # audioAnalysis.beatExtractionWrapper(wav_file, plot=True)
-    [fs, x] = audioBasicIO.readAudioFile(WAV_FILE)
-    print(fs)
+    WAV_FILE = '/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/pyAudioAnalysis/data/beat/small.wav'
+    [Fs, x] = audioBasicIO.readAudioFile(WAV_FILE);
+    F, f_names = audioFeatureExtraction.stFeatureExtraction(x, Fs, 0.050*Fs, 0.025*Fs);
+    print(audioFeatureExtraction.beatExtraction(F, 1, PLOT=True))
