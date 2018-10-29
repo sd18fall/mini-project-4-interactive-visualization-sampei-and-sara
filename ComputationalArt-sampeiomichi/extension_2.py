@@ -8,7 +8,7 @@ from math import *
 from PIL import Image
 
 
-def build_random_function(min_depth, max_depth):
+def build_random_function(min_depth, max_depth, t):
     """Build a random function.
 
     Builds a random function of depth at least min_depth and depth at most
@@ -25,16 +25,16 @@ def build_random_function(min_depth, max_depth):
         these functions)
     """
     # TODO: implement this
-    bas = ['x','y']
-    func = ['x','y','cos_pi','sin_pi','prod','avg']
-    if max_depth == 1:
-        return bas[randint(0,1)]
+    bas = ['x','y','t']
+    func = ['x','y','t','cos_pi','sin_pi','prod','avg']
+    if t == 1:
+        return bas[randint(0,2)]
     else:
-        block = func[randint(2,5)]
+        block = func[randint(3,6)]
         if block == 'prod' or 'avg': # When Block needs two inputs
-            return [block, build_random_function(min_depth-1, max_depth-1), build_random_function(min_depth-1, max_depth-1)]
+            return [block, build_random_function(min_depth-1, max_depth-1, t-1), build_random_function(min_depth-1, max_depth-1,t-1)]
         elif not block == 'prod':
-            return [block, build_random_function(min_depth-1, max_depth-1)]
+            return [block, build_random_function(min_depth-1, max_depth-1, t-1)]
 
 
 def evaluate_random_function(f, x, y):
@@ -61,14 +61,16 @@ def evaluate_random_function(f, x, y):
         return x
     elif f[0] == 'y':
         return y
+    elif f[0] == 't':
+        return t
     elif f[0] == 'avg':
-        return (evaluate_random_function(f[1],x,y)+evaluate_random_function(f[2],x,y))/2
+        return (evaluate_random_function(f[1],x,y,t)+evaluate_random_function(f[2],x,y,t))/2
     elif f[0] == 'cos_pi':
-        return cos(pi*evaluate_random_function(f[1],x,y))
+        return cos(pi*evaluate_random_function(f[1],x,y,t))
     elif f[0] == 'sin_pi':
-        return sin(pi*evaluate_random_function(f[1],x,y))
+        return sin(pi*evaluate_random_function(f[1],x,y,t))
     elif f[0] == 'prod':
-        return evaluate_random_function(f[1],x,y)*evaluate_random_function(f[2],x,y)
+        return evaluate_random_function(f[1],x,y,t)*evaluate_random_function(f[2],x,y,t)
 
 def remap_interval(val,
                    input_interval_start,
@@ -134,39 +136,20 @@ def color_map(val):
     color_code = remap_interval(val, -1, 1, 0, 255)
     return int(color_code)
 
-def test_image(filename, x_size=350, y_size=350):
-    """Generate a test image with random pixels and save as an image file.
+def generate_functions(t):
+    # Functions for red, green, and blue channels - where the magic happens!
+    red_function = build_random_function(4, 4, t)
+    green_function = build_random_function(4, 4, t)
+    blue_function = build_random_function(4, 4, t)
+    return([red_function, green_function, blue_function])
 
-    Args:
-        filename: string filename for image (should be .png)
-        x_size, y_size: optional args to set image dimensions (default: 350)
-    """
-    # Create image and loop over all pixels
-    im = Image.new("RGB", (x_size, y_size))
-    pixels = im.load()
-    for i in range(x_size):
-        for j in range(y_size):
-            x = remap_interval(i, 0, x_size, -1, 1)
-            y = remap_interval(j, 0, y_size, -1, 1)
-            pixels[i, j] = (randint(0, 255),  # Red channel
-                            randint(0, 255),  # Green channel
-                            randint(0, 255))  # Blue channel
-
-    im.save(filename)
-
-
-def generate_art(filename, x_size=350, y_size=350):
+def generate_art(filename, t, x_size=350, y_size=350):
     """Generate computational art and save as an image file.
 
     Args:
         filename: string filename for image (should be .png)
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
-    # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function(3, 4)
-    green_function = build_random_function(3, 4)
-    blue_function = build_random_function(3, 4)
-
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
     pixels = im.load()
@@ -175,17 +158,22 @@ def generate_art(filename, x_size=350, y_size=350):
             x = remap_interval(i, 0, x_size, -1, 1)
             y = remap_interval(j, 0, y_size, -1, 1)
             pixels[i, j] = (
-                color_map(evaluate_random_function(red_function, x, y)),
-                color_map(evaluate_random_function(green_function, x, y)),
-                color_map(evaluate_random_function(blue_function, x, y))
+                color_map(evaluate_random_function(red_function, x, y, t)),
+                color_map(evaluate_random_function(green_function, x, y, t)),
+                color_map(evaluate_random_function(blue_function, x, y, t))
             )
 
-    im.save(filename)
+    im.save('/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/ComputationalArt-sampeiomichi/movie1', filename)
 
-def generate_movie(frames):
-    for frame_number in range(0, frames):
-        filename = 'frame' + str(frame_number) + '.png'
-        generate_art(filename)
+def generate_movie(t):
+    functions = generate_functions(t)
+    red_function = functions[0]
+    green_function = functions[1]
+    blue_function = functions[2]
+
+    for frame_number in range(1, frames):
+        filename = 'movie1_' + str(frame_number) + '.png'
+        generate_art(filename, t, red_function, green_function, blue_function)
 
 if __name__ == '__main__':
     import doctest
@@ -195,4 +183,4 @@ if __name__ == '__main__':
     # TODO: Un-comment the generate_art function call after you
     #       implement remap_interval and evaluate_random_function
 
-    generate_movie(3)
+    generate_movie(24)

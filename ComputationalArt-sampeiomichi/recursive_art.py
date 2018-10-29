@@ -6,6 +6,7 @@ Mini Project 2: Computational Art
 from random import *
 from math import *
 from PIL import Image
+import PIL.ImageOps
 
 
 def build_random_function(min_depth, max_depth):
@@ -49,12 +50,6 @@ def evaluate_random_function(f, x, y, t):
 
     Returns:
         The function value
-
-    Examples:
-        >>> evaluate_random_function(["x"],-0.5, 0.75)
-        -0.5
-        >>> evaluate_random_function(["y"],0.1,0.02)
-        0.02
     """
     # Complete
     if f[0] == 'x':
@@ -138,9 +133,9 @@ def color_map(val):
 
 def generate_functions():
     # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function(3, 5)
-    green_function = build_random_function(3, 5)
-    blue_function = build_random_function(3, 5)
+    red_function = build_random_function(4, 6)
+    green_function = build_random_function(4, 6)
+    blue_function = build_random_function(4, 6)
     return([red_function, green_function, blue_function])
 
 
@@ -165,22 +160,25 @@ def generate_art(filename, t, red_function, green_function, blue_function, x_siz
                 color_map(evaluate_random_function(green_function, x, y, t)),
                 color_map(evaluate_random_function(blue_function, x, y, t))
             )
+    if filename[:6] == 'movie1':
+        im.save(filename)
+    if filename[:6] == 'movie2':
+        inverted_im = PIL.ImageOps.invert(im)
+        inverted_im.save(filename)
+    if filename[:6] == 'movie3':
+        grayscale_im = PIL.ImageOps.grayscale(im)
+        grayscale_im.save(filename)
 
-    im.save(filename)
-
-def generate_movie(filename, frames):
+def generate_movie(frames):
     functions = generate_functions()
     red_function = functions[0]
     green_function = functions[1]
     blue_function = functions[2]
 
-    for frame_number in range(1, frames):
-        filename = 'movie1_' + str(frame_number) + '.png'
-        generate_art(filename, frame_number, red_function, green_function, blue_function)
+    for movie_num in range(4):
+        for frame_number in range(1, frames):
+            filename = 'movie'+ str(movie_num) +'_' + str(frame_number) + '.png'
+            generate_art(filename, frame_number, red_function, green_function, blue_function)
 
 if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-
-
-    generate_movie("example2.png", 240)
+    generate_movie(240)
