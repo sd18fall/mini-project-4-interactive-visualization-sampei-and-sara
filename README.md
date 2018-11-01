@@ -1,5 +1,4 @@
 # Music_Visualizer
-mini-project-4-interactive-visualization-sampei-and-sara created by GitHub Classroom
 
 This project is an Interactive Music Visulizer. To use this program, users will run the audio_visualizer.py file, which will play Britney Spear's hit single Inside Out with a visualization of the song. Furthermore, users will be able to press the keys Q, W, and E to manipulate the colors and the four arrows to move around the image.
 
