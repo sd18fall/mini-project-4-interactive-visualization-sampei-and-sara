@@ -139,7 +139,7 @@ def generate_functions():
     return([red_function, green_function, blue_function])
 
 
-def generate_art(filename, t, red_function, green_function, blue_function, x_size=350, y_size=350):
+def generate_art(filename, t, red_function, green_function, blue_function, x_size=1000, y_size=1000):
     """Generate computational art and save as an image file.
 
     Args:
@@ -181,4 +181,4 @@ def generate_movie(frames):
             generate_art(filename, frame_number, red_function, green_function, blue_function)
 
 if __name__ == '__main__':
-    generate_movie(240)
+    generate_movie(24)

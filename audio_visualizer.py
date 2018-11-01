@@ -50,55 +50,82 @@ def bpm_to_frame(bpm):
     frames = bps * 24
     return frames
 
-def key_q(key, frames):
+def key_q(key, frames, x, y):
     for frame in range(1,frames):
         to_display = pygame.image.load('/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/ComputationalArt-sampeiomichi/movie1_'+str(frame)+'.png')
-        gameDisplay.blit(to_display, (0,0))
+        gameDisplay.blit(to_display, (x,y))
         pygame.time.delay(24)
         pygame.display.update()
 
-def key_w(key, frames):
+def key_w(key, frames, x, y):
     for frame in range(1,frames):
         to_display = pygame.image.load('/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/ComputationalArt-sampeiomichi/movie2_'+str(frame)+'.png')
-        gameDisplay.blit(to_display, (0,0))
+        gameDisplay.blit(to_display, (x,y))
         pygame.time.delay(24)
         pygame.display.update()
 
-def key_e(key, frames):
+def key_e(key, frames, x, y):
     for frame in range(1,frames):
         to_display = pygame.image.load('/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/ComputationalArt-sampeiomichi/movie3_'+str(frame)+'.png')
-        gameDisplay.blit(to_display, (0,0))
+        gameDisplay.blit(to_display, (x,y))
         pygame.time.delay(24)
         pygame.display.update()
 
 if __name__ == "__main__": #Controller
-
+    # my_path = os.path.abspath(os.path.dirname(__file__))
+    # WAV_FILE = os.path.join(my_path, 'mini-project-4-interactive-visualization-sampei-and-sara/pyAudioAnalysis/data/beat/small.wav')
     WAV_FILE = '/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/pyAudioAnalysis/data/beat/small.wav'
     [Fs, x] = audioBasicIO.readAudioFile(WAV_FILE);
     F, f_names = audioFeatureExtraction.stFeatureExtraction(x, Fs, 0.050*Fs, 0.025*Fs);
-    print(audioFeatureExtraction.beatExtraction(F, 1, PLOT=False))
+    bpm, ratio = audioFeatureExtraction.beatExtraction(F, 1, PLOT=False)
 
-    frames = 239
-
+    frames = int(bpm_to_frame(int(bpm)*2))
     pygame.init()
     display_width = 350
     display_height = 350
 
     gameDisplay = pygame.display.set_mode((display_width,display_height))
     end = False
+    state = 1
+    x = 0
+    y = 0
+    click = False
     while not end:
-        key = 'x'
+        input = ''
+        key = ''
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 key = event.key
         if key == ord('z'):
             end = True
-        if key == ord('q'):
+        elif key == ord('q'):
             print('Regular')
-            key_q(key, frames)
-        if key == ord('w'):
+            state = 1
+        elif key == ord('w'):
             print('Colors Inverted!')
-            key_w(key, frames)
-        if key == ord('e'):
+            state = 2
+        elif key == ord('e'):
             print('Image Greyscaled!')
-            key_e(key, frames)
+            state = 3
+        elif key == 273:
+            if y >= -650 and y < 0:
+                print('Up')
+                y = y + 50
+        elif key == 274:
+            if y > -650 and y <= 0:
+                print('Down')
+                y = y - 50
+        elif key == 276:
+            if x >= -650 and x < 0:
+                print('Left')
+                x = x + 50
+        elif key == 275:
+            if x > -650 and x <= 0:
+                print('Right')
+                x = x - 50
+        if state == 1:
+            key_q(key, frames, x, y)
+        elif state == 2:
+            key_w(key, frames, x, y)
+        elif state == 3:
+            key_e(key, frames, x, y)
