@@ -52,7 +52,7 @@ def bpm_to_frame(bpm):
 def key_q(key, frames, x, y):
     '''Plays the frames with the regular color scheme'''
     for frame in range(1,frames):
-        to_display = pygame.image.load('/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/ComputationalArt-sampeiomichi/movie1_'+str(frame)+'.png') #This hardcoded line would have to be changed
+        to_display = pygame.image.load('/home/sampeiomichi/music_visualizer/ComputationalArt-sampeiomichi/movie1_'+str(frame)+'.png') #This hardcoded line would have to be changed
         gameDisplay.blit(to_display, (x,y))
         pygame.time.delay(24)
         pygame.display.update()
@@ -60,7 +60,7 @@ def key_q(key, frames, x, y):
 def key_w(key, frames, x, y):
     '''Plays the frames with the inverted color scheme'''
     for frame in range(1,frames):
-        to_display = pygame.image.load('/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/ComputationalArt-sampeiomichi/movie2_'+str(frame)+'.png') #This hardcoded line would have to be changed
+        to_display = pygame.image.load('/home/sampeiomichi/music_visualizer/ComputationalArt-sampeiomichi/movie2_'+str(frame)+'.png') #This hardcoded line would have to be changed
         gameDisplay.blit(to_display, (x,y))
         pygame.time.delay(24)
         pygame.display.update()
@@ -68,13 +68,13 @@ def key_w(key, frames, x, y):
 def key_e(key, frames, x, y):
     '''Plays the frames with the greyscaled color scheme'''
     for frame in range(1,frames):
-        to_display = pygame.image.load('/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/ComputationalArt-sampeiomichi/movie3_'+str(frame)+'.png') #This hardcoded line would have to be changed
+        to_display = pygame.image.load('/home/sampeiomichi/music_visualizer/ComputationalArt-sampeiomichi/movie3_'+str(frame)+'.png') #This hardcoded line would have to be changed
         gameDisplay.blit(to_display, (x,y))
         pygame.time.delay(24)
         pygame.display.update()
 
 if __name__ == "__main__": #Main
-    file = '/home/sampeiomichi/mini-project-4-interactive-visualization-sampei-and-sara/pyAudioAnalysis/data/beat/insideout.mp3' #This hardcoded line would have to be changed
+    file = '/home/sampeiomichi/music_visualizer/pyAudioAnalysis/data/beat/insideout.mp3' #This hardcoded line would have to be changed
     frames = int(bpm_to_frame(60)) #Gets the number of frames that need to be looped given 60 BPM
     pygame.init()
     pygame.mixer.init()
